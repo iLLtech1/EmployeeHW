@@ -1,44 +1,43 @@
 const render = require('./lib/htmlRenderer.js')
-const Intern = require('./lib/Intern.js.js')
-const Engineer = require('./lib/Engineer.js.js')
+const Intern = require('./lib/Intern.js')
+const Engineer = require('./lib/Engineer.js')
 const Manager = require('./lib/Manager.js')
 const { prompt } = require('inquirer')
 const { writeFile } = require('fs')
 
-const school = []
+const company = []
 
 const buildManager = ({ name, email, phone }) => {
   prompt({
     type: 'input',
-    name: 'position',
-    message: 'What is their position?'
+    name: 'officeNumber',
+    message: 'What is your office number?'
   })
-    .then(({ position }) => {
-      school.push(new Faculty(name, email, phone, position))
+    .then(({ officeNumber }) => {
+      company.push(new Manager(name, email, phone, officeNumber))
       menu()
     })
 }
-
-const buildEngineer = ({ name, email, phone }) => {
+const buildEngineer = ({ name, email, id }) => {
   prompt({
     type: 'input',
-    name: 'subject',
-    message: 'What subject do they teach?'
+    name: 'github',
+    message: 'What is you github user name?'
   })
-    .then(({ subject }) => {
-      school.push(new Teacher(name, email, phone, subject))
+    .then(({ github }) => {
+      company.push(new Engineer(name, email, id, github))
       menu()
     })
 }
 
-const buildIntern = ({ name, email, phone }) => {
+const buildIntern = ({ name, email, id, }) => {
   prompt({
-    type: 'number',
-    name: 'grade',
-    message: 'What grade are they in?'
+    type: 'input',
+    name: 'school',
+    message: 'What school do you goto?'
   })
-    .then(({ grade }) => {
-      school.push(new Student(name, email, phone, grade))
+    .then(({ school }) => {
+      company.push(new Intern(name, email, id, school))
       menu()
     })
 }
@@ -48,23 +47,23 @@ const buildEmployee = () => {
     {
       type: 'list',
       name: 'role',
-      message: 'Who would you like to create?',
-      choices: ['Student', 'Teacher', 'Faculty']
+      message: 'What is your role?',
+      choices: ['Manager', 'Engineer', 'Intern']
     },
     {
       type: 'input',
       name: 'name',
-      message: 'What is their name?'
+      message: 'What is your name?'
     },
     {
       type: 'input',
       name: 'email',
-      message: 'What is their email?'
+      message: 'What is your email?'
     },
     {
       type: 'input',
-      name: 'phone',
-      message: 'What is their phone number?'
+      name: 'id',
+      message: 'What is your id number?'
     }
   ])
     .then(({ role, ...employee }) => {
@@ -87,11 +86,11 @@ const menu = () => {
     type: 'list',
     name: 'action',
     message: 'What would you like to do?',
-    choices: ['Create new person', 'Finish']
+    choices: ['Create new Employee!', 'Finish']
   })
     .then(({ action }) => {
       switch (action) {
-        case 'Create new person':
+        case 'Create new Employee!':
           buildEmployee()
           break
         case 'Finish':
