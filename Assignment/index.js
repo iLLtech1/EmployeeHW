@@ -69,13 +69,13 @@ const buildEmployee = () => {
     .then(({ role, ...employee }) => {
       switch (role) {
         case 'Intern':
-          buildStudent(employee)
+          buildIntern(employee)
           break
         case 'Engineer':
-          buildTeacher(employee)
+          buildEngineer(employee)
           break
         case 'Manager':
-          buildFaculty(employee)
+          buildManager(employee)
           break
       }
     })
